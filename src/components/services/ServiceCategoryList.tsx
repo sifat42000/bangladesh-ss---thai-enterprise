@@ -18,9 +18,9 @@ const ServiceCategoryList: React.FC = () => {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16 border-b border-white/5 pb-8"
+            className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 mb-16 border-b border-white/5 pb-8 text-center md:text-left"
           >
-            <div className="space-y-4">
+            <div className="space-y-4 w-full md:max-w-2xl">
               <span className="text-brand-gold font-black text-6xl opacity-10 absolute -translate-y-12">0{catIdx + 1}</span>
               <h4 className="text-brand-gold font-bold uppercase tracking-widest text-sm relative">{category.title}</h4>
               <h2 className="text-3xl md:text-5xl font-black text-white">{category.bnTitle}</h2>

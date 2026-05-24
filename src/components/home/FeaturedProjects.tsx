@@ -14,12 +14,12 @@ const FeaturedProjects: React.FC = () => {
   return (
     <section className="py-24 bg-brand-navy">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
-          <div className="max-w-2xl space-y-4">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 mb-16 text-center md:text-left">
+          <div className="max-w-2xl space-y-4 w-full md:w-auto">
             <h4 className="text-brand-gold font-bold uppercase tracking-widest text-sm">প্রজেক্ট গ্যালারি</h4>
             <h2 className="text-4xl md:text-5xl font-black text-white">আমাদের সফল কিছু কাজ</h2>
           </div>
-          <Link to="/projects" className="text-brand-gold font-bold border-b-2 border-brand-gold pb-1 hover:text-white hover:border-white transition-all mb-2">
+          <Link to="/projects" className="text-brand-gold font-bold border-b-2 border-brand-gold pb-1 hover:text-white hover:border-white transition-all mb-2 self-center md:self-auto">
             সবগুলো প্রজেক্ট দেখুন
           </Link>
         </div>
