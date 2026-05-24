@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Noto Sans Bengali", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-brand-navy: #0A0C10;
+  --color-brand-charcoal: #12141C;
+  --color-brand-slate: #1A1E2E;
+  --color-brand-gold: #D4AF37;
+  --color-brand-gold-muted: #8A6D3B;
+  --color-brand-silver: #C0C0C0;
+  --color-brand-gray: #8E9299;
+  --color-brand-whatsapp: #25D366;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-navy text-white font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer utilities {
+  .glass {
+    @apply backdrop-blur-md bg-white/5 border border-white/10;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  }
+  
+  .section-divider {
+    @apply h-px w-full bg-linear-to-r from-transparent via-white/10 to-transparent;
+  }
+}
+
+.bento-card {
+  @apply bg-brand-charcoal border border-white/10 rounded-[2.5rem] overflow-hidden transition-all duration-500 ease-out;
+}
+
+.bento-card-hover {
+  @apply hover:border-brand-gold/30 hover:bg-brand-slate hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-gold/5;
+}
+
+.premium-gradient {
+  background: linear-gradient(135deg, #1A1E2E 0%, #0A0C10 100%);
+}
+
+.gold-text {
+  background: linear-gradient(to right, #D4AF37, #F5E050, #D4AF37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+

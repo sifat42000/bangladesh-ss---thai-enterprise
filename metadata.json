@@ -1,0 +1,8 @@
+{
+  "name": "Bangladesh SS & Thai Enterprise",
+  "description": "Premium Stainless Steel, Thai Aluminium, and Glass work services in Bangladesh. Professional interior and exterior construction solutions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
