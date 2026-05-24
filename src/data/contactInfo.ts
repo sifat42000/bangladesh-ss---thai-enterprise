@@ -4,7 +4,7 @@
  */
 
 export const contactInfo = {
-  phone: '019989761',
+  phone: '01998-976188',
   whatsapp: '01998-976188',
   email: 'info@bangladeshssthai.com',
   address: 'জান্নাতুল মওলানার অপজিড সাইডে,চুয়াডাঙ্গা সদর',
