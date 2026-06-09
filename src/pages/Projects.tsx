@@ -14,6 +14,7 @@ import SEO from '../components/SEO';
 import OptimizedImage from '../components/common/OptimizedImage';
 import ProjectGrid from '../components/projects/ProjectGrid';
 import BeforeAfterSection from '../components/projects/BeforeAfterSection';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 const filters = [
   { id: 'all', label: 'সব কাজ' },
@@ -99,8 +100,10 @@ export default function Projects() {
         </div>
       </section>
 
-      <ProjectGrid projects={filteredProjects} />
-      <BeforeAfterSection />
+      <ErrorBoundary>
+        <ProjectGrid projects={filteredProjects} />
+        <BeforeAfterSection />
+      </ErrorBoundary>
 
       {/* 5. CTA Section */}
       <section className="py-24 bg-brand-navy">
