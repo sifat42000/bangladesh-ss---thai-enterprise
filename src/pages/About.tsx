@@ -40,14 +40,6 @@ export default function About() {
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-brand-gold/10 border border-brand-gold/20 rounded-full"
-            >
-              <Users size={16} className="text-brand-gold" />
-              <span className="text-brand-gold text-xs font-bold uppercase tracking-widest">আপনার বিশ্বস্ত ডেকোরেশন পার্টনার</span>
-            </motion.div>
             
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
@@ -278,13 +270,6 @@ export default function About() {
                   <Phone size={28} />
                   কল করুন
                 </a>
-                <Link 
-                  to="/quote"
-                  className="px-10 py-5 bg-brand-gold text-black font-black rounded-2xl flex items-center gap-3 text-lg transition-transform hover:scale-105 active:scale-95 shadow-2xl"
-                >
-                  <CheckCircle size={28} />
-                  কোটেশন নিন
-                </Link>
               </div>
               <p className="text-brand-silver font-bold uppercase tracking-widest text-sm pt-4">আমরা আছি আপনার সেবায় সদা সচেষ্ট</p>
             </div>

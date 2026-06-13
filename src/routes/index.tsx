@@ -13,7 +13,6 @@ const Services = lazy(() => import('../pages/Services'));
 const ServiceDetails = lazy(() => import('../pages/ServiceDetails'));
 const Projects = lazy(() => import('../pages/Projects'));
 const Contact = lazy(() => import('../pages/Contact'));
-const Quote = lazy(() => import('../pages/Quote'));
 
 function RouteError() {
   const error = useRouteError();
@@ -62,10 +61,6 @@ export const router = createHashRouter([
       {
         path: 'contact',
         element: <Contact />,
-      },
-      {
-        path: 'quote',
-        element: <Quote />,
       },
     ],
   },

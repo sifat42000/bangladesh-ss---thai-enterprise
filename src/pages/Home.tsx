@@ -26,7 +26,6 @@ const ServicesPreview = lazy(() => import('../components/home/ServicesPreview'))
 const WhyChooseUsSection = lazy(() => import('../components/home/WhyChooseUsSection'));
 const FeaturedProjects = lazy(() => import('../components/home/FeaturedProjects'));
 const WorkProcess = lazy(() => import('../components/home/WorkProcess'));
-const TestimonialSection = lazy(() => import('../components/home/TestimonialSection'));
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -79,12 +78,6 @@ export default function Home() {
             </motion.p>
 
             <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-4">
-              <Link 
-                to="/quote" 
-                className="px-8 py-5 bg-brand-gold hover:bg-white text-black font-black rounded-2xl transition-all shadow-[0_0_30px_rgba(192,160,96,0.3)] hover:shadow-brand-gold/50 text-base md:text-lg hover:-translate-y-1 active:scale-95"
-              >
-                ফ্রি কোটেশন নিন
-              </Link>
               <Link 
                 to="/projects" 
                 className="px-8 py-5 border-2 border-white/10 hover:border-brand-gold text-white font-bold rounded-2xl transition-all text-base md:text-lg group flex items-center gap-2 hover:bg-white/5"
@@ -156,7 +149,6 @@ export default function Home() {
         <WhyChooseUsSection />
         <FeaturedProjects />
         <WorkProcess />
-        <TestimonialSection />
       </Suspense>
 
       {/* Final CTA Section */}

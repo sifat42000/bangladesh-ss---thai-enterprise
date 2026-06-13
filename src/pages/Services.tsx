@@ -92,12 +92,6 @@ export default function Services() {
               আপনার কাজের ছবি বা মাপ আমাদের হোয়াটসয়্যাপে পাঠান অথবা সরাসরি কল করুন।
             </p>
             <div className="flex flex-wrap justify-center gap-6 pt-6">
-              <Link 
-                to="/quote" 
-                className="px-10 py-5 bg-white text-black font-black rounded-2xl transition-all hover:scale-105 shadow-2xl inline-block text-lg"
-              >
-                ফ্রি কোটেশন নিন
-              </Link>
               <button 
                 onClick={() => window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}`, '_blank')}
                 className="px-10 py-5 bg-[#25D366] text-white font-black rounded-2xl flex items-center gap-3 transition-all hover:scale-105 shadow-2xl text-lg"

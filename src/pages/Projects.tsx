@@ -132,13 +132,6 @@ export default function Projects() {
                   WhatsApp-এ ছবি পাঠান
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </button>
-                <Link 
-                  to="/quote" 
-                  className="px-10 py-5 bg-white text-black font-black rounded-2xl transition-all hover:scale-105 shadow-2xl text-lg flex items-center gap-3"
-                >
-                  <Sparkles size={24} className="text-brand-gold" />
-                  কোটেশন রিকোয়েস্ট
-                </Link>
               </div>
             </div>
           </motion.div>

@@ -3,20 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Facebook, ArrowRight, Camera, CheckCircle2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { siteConfig } from '../data/contactInfo';
 import SEO from '../components/SEO';
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
-
   const handleWhatsApp = () => {
     const message = encodeURIComponent("হ্যালো, আমি আপনাদের সার্ভিসের বিষয়ে জানতে চাই। আমার প্রজেক্ট নিয়ে কথা বলতে চাই।");
     window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}?text=${message}`, '_blank');
@@ -79,101 +72,11 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* 3. Contact Form & 4. Quick Quote Prompt */}
+      {/* 3. Quick Quote Prompt */}
       <section className="py-24 bg-brand-slate relative">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-            {/* Form */}
-            <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="lg:col-span-7 bg-brand-navy p-8 md:p-16 rounded-[3rem] border border-white/10 relative overflow-hidden shadow-3xl min-h-[600px] flex flex-col justify-center"
-            >
-              <AnimatePresence mode="wait">
-                {!submitted ? (
-                  <motion.div
-                    key="form"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="space-y-10"
-                  >
-                    <div>
-                      <h2 className="text-3xl font-black text-white mb-2">বার্তা পাঠান</h2>
-                      <p className="text-brand-silver">নিচের ফর্মটি পূরণ করুন, আমরা দ্রুত উত্তর দেব।</p>
-                    </div>
-                    
-                    <form onSubmit={handleSubmit} className="space-y-8">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-3">
-                          <label className="text-xs font-black uppercase tracking-widest text-brand-gold pl-2">নাম</label>
-                          <input required type="text" placeholder="আপনার নাম লিখুন" className="w-full bg-brand-slate/30 border border-white/10 rounded-2xl p-5 focus:ring-2 focus:ring-brand-gold focus:outline-none transition-all text-white" />
-                        </div>
-                        <div className="space-y-3">
-                          <label className="text-xs font-black uppercase tracking-widest text-brand-gold pl-2">মোবাইল নাম্বার</label>
-                          <input required type="tel" placeholder="০১৭০০-০০০০০০" className="w-full bg-brand-slate/30 border border-white/10 rounded-2xl p-5 focus:ring-2 focus:ring-brand-gold focus:outline-none transition-all text-white" />
-                        </div>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-3">
-                          <label className="text-xs font-black uppercase tracking-widest text-brand-gold pl-2">কাজের ধরন</label>
-                          <select className="w-full bg-brand-slate/30 border border-white/10 rounded-2xl p-5 focus:ring-2 focus:ring-brand-gold focus:outline-none transition-all text-white appearance-none md:appearance-auto">
-                            <option className="bg-brand-navy">এস এস কাজ (SS Work)</option>
-                            <option className="bg-brand-navy">থাই অ্যালুমিনিয়াম (Thai Aluminium)</option>
-                            <option className="bg-brand-navy">গ্লাস সলিউশন (Glass Solution)</option>
-                            <option className="bg-brand-navy">অন্যান্য (Others)</option>
-                          </select>
-                        </div>
-                        <div className="space-y-3">
-                          <label className="text-xs font-black uppercase tracking-widest text-brand-gold pl-2">ঠিকানা / এলাকা</label>
-                          <input required type="text" placeholder="যেমন: উত্তরা, ঢাকা" className="w-full bg-brand-slate/30 border border-white/10 rounded-2xl p-5 focus:ring-2 focus:ring-brand-gold focus:outline-none transition-all text-white" />
-                        </div>
-                      </div>
-
-                      <div className="space-y-3">
-                        <label className="text-xs font-black uppercase tracking-widest text-brand-gold pl-2">আপনার প্রয়োজন লিখুন</label>
-                        <textarea required placeholder="কাজের বিস্তারিত বিবরণ এখানে লিখুন..." rows={5} className="w-full bg-brand-slate/30 border border-white/10 rounded-2xl p-5 focus:ring-2 focus:ring-brand-gold focus:outline-none transition-all text-white resize-none"></textarea>
-                      </div>
-
-                      <motion.button 
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        type="submit"
-                        className="w-full bg-brand-gold text-black text-lg font-black py-5 rounded-2xl hover:bg-white transition-all shadow-xl shadow-brand-gold/20 flex items-center justify-center gap-3"
-                      >
-                        বার্তা পাঠান <Send size={24} />
-                      </motion.button>
-                    </form>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="success"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-center space-y-8"
-                  >
-                    <div className="w-24 h-24 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto shadow-2xl">
-                      <CheckCircle2 size={56} />
-                    </div>
-                    <div>
-                      <h2 className="text-4xl font-black text-white mb-4">ধন্যবাদ!</h2>
-                      <p className="text-brand-silver text-xl leading-relaxed">আপনার বার্তাটি আমরা পেয়েছি। আমাদের একজন প্রতিনিধি খুব শীঘ্রই আপনার সাথে যোগাযোগ করবে।</p>
-                    </div>
-                    <button 
-                      onClick={() => setSubmitted(false)}
-                      className="px-8 py-3 bg-white/10 text-brand-gold rounded-full font-bold hover:bg-white/20 transition-all border border-brand-gold/20"
-                    >
-                      আরেকটি বার্তা পাঠান
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-
-            {/* Quote Prompt */}
-            <div className="lg:col-span-5 space-y-8">
+          <div className="grid grid-cols-1 gap-16 items-start">
+            <div className="space-y-8">
               <motion.div 
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -201,16 +104,16 @@ export default function Contact() {
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </motion.div>
+            </div>
 
-              <div className="bg-brand-navy/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/5 space-y-4">
-                <h4 className="text-white font-bold text-xl">অফিসের ঠিকানা</h4>
-                <div className="flex items-start gap-4 text-brand-silver">
-                   <MapPin size={24} className="text-brand-gold shrink-0" />
-                   <p className="font-medium">{siteConfig.address}</p>
-                </div>
-                <div className="pt-4 border-t border-white/5">
-                  <p className="text-xs text-brand-gray uppercase tracking-widest font-black">{siteConfig.openingHours} পর্যন্ত খোলা</p>
-                </div>
+            <div className="bg-brand-navy/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/5 space-y-4">
+              <h4 className="text-white font-bold text-xl">অফিসের ঠিকানা</h4>
+              <div className="flex items-start gap-4 text-brand-silver">
+                 <MapPin size={24} className="text-brand-gold shrink-0" />
+                 <p className="font-medium">{siteConfig.address}</p>
+              </div>
+              <div className="pt-4 border-t border-white/5">
+                <p className="text-xs text-brand-gray uppercase tracking-widest font-black">{siteConfig.openingHours} পর্যন্ত খোলা</p>
               </div>
             </div>
           </div>

@@ -86,18 +86,6 @@ export default function Navbar() {
               </NavLink>
             </motion.div>
           ))}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: navLinks.length * 0.1 }}
-          >
-            <Link
-              to="/quote"
-              className="bg-brand-gold text-black px-8 py-3 rounded-full font-bold text-sm uppercase tracking-wider transition-all duration-300 shadow-lg shadow-brand-gold/20 hover:bg-brand-gold-muted hover:scale-105 active:scale-95"
-            >
-              ফ্রি কোটেশন নিন
-            </Link>
-          </motion.div>
         </div>
       </div>
     </nav>

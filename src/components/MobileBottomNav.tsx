@@ -55,23 +55,6 @@ const MobileBottomNav: React.FC = () => {
           </NavLink>
         ))}
         
-        {/* Special Quote Button */}
-        <NavLink
-            to="/quote"
-            className={({ isActive }) => `
-              flex flex-col items-center justify-center gap-1 w-full h-full transition-all duration-300
-              ${isActive ? 'text-brand-gold' : 'text-brand-silver'}
-            `}
-          >
-            {({ isActive }) => (
-              <>
-                <div className={`p-2 rounded-xl ${isActive ? 'bg-brand-gold text-black' : 'bg-brand-gold/10 text-brand-gold'} transition-all`}>
-                  <FileText size={20} />
-                </div>
-                <span className="text-[10px] font-bold tracking-tight">কোটেশন</span>
-              </>
-            )}
-          </NavLink>
       </div>
     </nav>
   );
