@@ -15,12 +15,31 @@ import {
   Sparkles,
   Phone
 } from 'lucide-react';
+import { trackContact, trackQuoteRequest } from '../lib/metaPixel';
 
 // Lazy loaded heavy service sections
 const ServiceCategoryList = lazy(() => import('../components/services/ServiceCategoryList'));
 const ServiceProcess = lazy(() => import('../components/services/ServiceProcess'));
 
 export default function Services() {
+  const handleWhatsApp = () => {
+    trackContact('whatsapp', 'services_page', {
+      cta_name: 'WhatsApp করুন',
+      cta_location: 'services_final_cta',
+    });
+    trackQuoteRequest('services_page', {
+      cta_name: 'WhatsApp করুন',
+      cta_location: 'services_final_cta',
+    });
+  };
+
+  const handlePhone = () => {
+    trackContact('phone', 'services_page', {
+      cta_name: 'সরাসরি কল করুন',
+      cta_location: 'services_final_cta',
+    });
+  };
+
   return (
     <div className="pt-20">
       <SEO 
@@ -93,7 +112,10 @@ export default function Services() {
             </p>
             <div className="flex flex-wrap justify-center gap-6 pt-6">
               <button 
-                onClick={() => window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}`, '_blank')}
+                onClick={() => {
+                  handleWhatsApp();
+                  window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}`, '_blank');
+                }}
                 className="px-10 py-5 bg-[#25D366] text-white font-black rounded-2xl flex items-center gap-3 transition-all hover:scale-105 shadow-2xl text-lg"
               >
                 <MessageCircle size={24} />
@@ -102,7 +124,7 @@ export default function Services() {
             </div>
             <div className="pt-8 flex flex-col items-center gap-4">
               <span className="text-brand-silver uppercase tracking-[0.3em] text-xs">অথবা সরাসরি কল করুন</span>
-              <a href={`tel:${siteConfig.phone}`} className="text-brand-gold text-2xl font-black flex items-center gap-3">
+              <a href={`tel:${siteConfig.phone}`} onClick={handlePhone} className="text-brand-gold text-2xl font-black flex items-center gap-3">
                 <Phone size={24} />
                 {siteConfig.phone}
               </a>

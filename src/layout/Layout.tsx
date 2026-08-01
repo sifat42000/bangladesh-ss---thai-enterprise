@@ -11,13 +11,23 @@ import Footer from './Footer';
 import FloatingContactButtons from '../components/FloatingContactButtons';
 import MobileBottomNav from '../components/MobileBottomNav';
 import Loading from '../components/Loading';
+import { initMetaPixel, trackPageView } from '../lib/metaPixel';
 
 export default function Layout() {
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname, search } = location;
+
+  useEffect(() => {
+    initMetaPixel();
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pathname]);
+
+  useEffect(() => {
+    trackPageView(pathname, search, document.title);
+  }, [pathname, search]);
 
   return (
     <div className="min-h-screen flex flex-col">

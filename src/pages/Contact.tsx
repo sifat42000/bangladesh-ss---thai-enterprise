@@ -8,12 +8,30 @@ import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Facebook, ArrowRight, 
 import { motion } from 'motion/react';
 import { siteConfig } from '../data/contactInfo';
 import SEO from '../components/SEO';
+import { trackContact, trackQuoteRequest } from '../lib/metaPixel';
 
 export default function Contact() {
   const handleWhatsApp = () => {
     const message = encodeURIComponent("হ্যালো, আমি আপনাদের সার্ভিসের বিষয়ে জানতে চাই। আমার প্রজেক্ট নিয়ে কথা বলতে চাই।");
+    trackContact('whatsapp', 'contact_page', {
+      cta_name: 'WhatsApp-এ তথ্য পাঠান',
+      cta_location: 'contact_primary',
+    });
+    trackQuoteRequest('contact_page', {
+      cta_name: 'WhatsApp-এ তথ্য পাঠান',
+      cta_location: 'contact_primary',
+      contact_method: 'whatsapp',
+    });
     window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}?text=${message}`, '_blank');
   };
+
+  const contactCards = [
+    { icon: Phone, title: 'ফোন', value: siteConfig.phone, color: 'bg-blue-500/10 text-blue-500', href: `tel:${siteConfig.phone}` },
+    { icon: MessageCircle, title: 'WhatsApp', value: siteConfig.whatsapp, color: 'bg-green-500/10 text-green-500', href: `https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}` },
+    { icon: MapPin, title: 'ঠিকানা', value: siteConfig.address, color: 'bg-red-500/10 text-red-500', href: '#' },
+    { icon: Facebook, title: 'Facebook', value: '', color: 'bg-blue-600/10 text-blue-600', href: siteConfig.facebook, isExternalLink: true },
+    { icon: Clock, title: 'সময়সূচি', value: siteConfig.openingHours, color: 'bg-purple-500/10 text-purple-500', href: '#' },
+  ];
 
   return (
     <div className="pt-20">
@@ -44,30 +62,81 @@ export default function Contact() {
       <section className="py-12 bg-brand-navy">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {[
-              { icon: Phone, title: 'ফোন', value: siteConfig.phone, color: 'bg-blue-500/10 text-blue-500' },
-              { icon: MessageCircle, title: 'WhatsApp', value: siteConfig.whatsapp, color: 'bg-green-500/10 text-green-500' },
-              { icon: MapPin, title: 'ঠিকানা', value: siteConfig.address, color: 'bg-red-500/10 text-red-500' },
-              { icon: Facebook, title: 'Facebook', value: siteConfig.facebook, color: 'bg-blue-600/10 text-blue-600' },
-              { icon: Clock, title: 'সময়সূচি', value: siteConfig.openingHours, color: 'bg-purple-500/10 text-purple-500' }
-            ].map((item, i) => (
-              <motion.div 
-                key={i} 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-8 bg-brand-slate/20 border border-white/5 rounded-[2.5rem] flex flex-col items-center text-center gap-4 hover:bg-brand-slate transition-all duration-300 h-full shadow-lg"
-              >
-                <div className={`w-14 h-14 ${item.color} rounded-2xl flex items-center justify-center shrink-0 shadow-lg`}>
-                  <item.icon size={28} />
-                </div>
-                <div>
-                  <h3 className="font-black text-white text-lg mb-1">{item.title}</h3>
-                  <p className="text-brand-silver font-medium text-sm leading-relaxed">{item.value}</p>
-                </div>
-              </motion.div>
-            ))}
+            {contactCards.map((item, i) => {
+              const isFacebookCard = item.title === 'Facebook';
+              const isPhoneCard = item.title === 'ফোন';
+              const isWhatsAppCard = item.title === 'WhatsApp';
+
+              if (isFacebookCard) {
+                return (
+                  <motion.a
+                    key={i}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Visit our Facebook page"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="group block p-8 bg-brand-slate/20 border border-white/5 rounded-[2.5rem] flex flex-col items-center text-center gap-4 hover:bg-brand-slate transition-all duration-300 h-full shadow-lg cursor-pointer"
+                  >
+                    <div className={`w-14 h-14 ${item.color} rounded-2xl flex items-center justify-center shrink-0 shadow-lg`}>
+                      <item.icon size={28} />
+                    </div>
+                    <div className="w-full">
+                      <h3 className="font-black text-white text-lg mb-1">{item.title}</h3>
+                      <p className="text-brand-silver font-medium text-xs leading-relaxed break-words">{siteConfig.name}</p>
+                    </div>
+                  </motion.a>
+                );
+              }
+
+              if (isPhoneCard || isWhatsAppCard) {
+                const anchorProps = isPhoneCard
+                  ? { href: item.href, target: undefined, rel: undefined }
+                  : { href: item.href, target: '_blank', rel: 'noopener noreferrer' };
+
+                return (
+                  <motion.a
+                    key={i}
+                    {...anchorProps}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="block p-8 bg-brand-slate/20 border border-white/5 rounded-[2.5rem] flex flex-col items-center text-center gap-4 hover:bg-brand-slate transition-all duration-300 h-full shadow-lg cursor-pointer"
+                  >
+                    <div className={`w-14 h-14 ${item.color} rounded-2xl flex items-center justify-center shrink-0 shadow-lg`}>
+                      <item.icon size={28} />
+                    </div>
+                    <div>
+                      <h3 className="font-black text-white text-lg mb-1">{item.title}</h3>
+                      <p className="text-brand-silver font-medium text-sm leading-relaxed">{item.value}</p>
+                    </div>
+                  </motion.a>
+                );
+              }
+
+              return (
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="p-8 bg-brand-slate/20 border border-white/5 rounded-[2.5rem] flex flex-col items-center text-center gap-4 hover:bg-brand-slate transition-all duration-300 h-full shadow-lg"
+                >
+                  <div className={`w-14 h-14 ${item.color} rounded-2xl flex items-center justify-center shrink-0 shadow-lg`}>
+                    <item.icon size={28} />
+                  </div>
+                  <div>
+                    <h3 className="font-black text-white text-lg mb-1">{item.title}</h3>
+                    <p className="text-brand-silver font-medium text-sm leading-relaxed">{item.value}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -163,6 +232,10 @@ export default function Contact() {
             <div className="flex justify-center pt-8">
                <a 
                  href={`tel:${siteConfig.phone}`}
+                 onClick={() => trackContact('phone', 'contact_page', {
+                   cta_name: 'সরাসরি কল দিন',
+                   cta_location: 'contact_primary',
+                 })}
                  className="px-12 py-6 bg-white text-black font-black rounded-[2rem] flex items-center gap-4 text-2xl transition-all hover:scale-105 shadow-3xl group"
                >
                  <Phone size={36} className="text-brand-gold" />

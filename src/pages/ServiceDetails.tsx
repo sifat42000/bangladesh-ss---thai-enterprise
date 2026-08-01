@@ -24,6 +24,7 @@ import {
   Zap,
   Info
 } from 'lucide-react';
+import { trackContact, trackQuoteRequest, trackViewContent } from '../lib/metaPixel';
 
 const ServiceDetails: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -35,7 +36,15 @@ const ServiceDetails: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [slug]);
+    if (service) {
+      trackViewContent(service.title, 'service', {
+        content_type: 'service_detail',
+        service_slug: service.slug,
+        source: 'service_detail',
+        route: `/services/${service.slug}`,
+      }, `service:${service.slug}`);
+    }
+  }, [slug, service]);
 
   if (!service) {
     return (
@@ -286,7 +295,21 @@ const ServiceDetails: React.FC = () => {
 
             <div className="flex flex-wrap justify-center gap-6 pt-10 relative z-10">
               <button 
-                onClick={() => window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}?text=${whatsappMessage}`, '_blank')}
+                onClick={() => {
+                  trackContact('whatsapp', 'service_detail', {
+                    service_name: service.title,
+                    service_slug: service.slug,
+                    cta_name: 'WhatsApp এ ছবি পাঠান',
+                    cta_location: 'service_detail_cta',
+                  });
+                  trackQuoteRequest('service_detail', {
+                    service_name: service.title,
+                    service_slug: service.slug,
+                    contact_method: 'whatsapp',
+                    cta_name: 'WhatsApp এ ছবি পাঠান',
+                  });
+                  window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}?text=${whatsappMessage}`, '_blank');
+                }}
                 className="px-10 py-5 bg-[#25D366] text-white font-black rounded-2xl flex items-center gap-3 transition-all hover:scale-105 shadow-2xl text-lg hover:bg-[#1ebe5d]"
               >
                 <MessageCircle size={24} />

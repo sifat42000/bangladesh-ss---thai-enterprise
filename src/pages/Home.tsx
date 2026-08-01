@@ -19,6 +19,7 @@ import { siteConfig } from '../data/contactInfo';
 import { statistics } from '../data/whyChooseUs';
 import SEO from '../components/SEO';
 import OptimizedImage from '../components/common/OptimizedImage';
+import { trackContact, trackCustomEvent, trackQuoteRequest } from '../lib/metaPixel';
 
 // Lazy loaded components for lower sections to optimize initial bundle and load
 const TrustBadges = lazy(() => import('../components/home/TrustBadges'));
@@ -43,6 +44,43 @@ const itemVariants = {
 };
 
 export default function Home() {
+  const handleViewProjectsClick = () => {
+    trackCustomEvent('ViewProjectsClick', {
+      source: 'home_hero',
+      cta_name: 'আমাদের কাজ দেখুন',
+      cta_location: 'home_hero',
+    });
+  };
+
+  const handleHeroWhatsApp = () => {
+    trackContact('whatsapp', 'home_hero', {
+      cta_name: 'WhatsApp করুন',
+      cta_location: 'home_hero',
+    });
+    trackQuoteRequest('home_hero', {
+      cta_name: 'WhatsApp করুন',
+      cta_location: 'home_hero',
+    });
+  };
+
+  const handleFinalWhatsApp = () => {
+    trackContact('whatsapp', 'home_final_cta', {
+      cta_name: 'WhatsApp এ ছবি পাঠান',
+      cta_location: 'home_final_cta',
+    });
+    trackQuoteRequest('home_final_cta', {
+      cta_name: 'WhatsApp এ ছবি পাঠান',
+      cta_location: 'home_final_cta',
+    });
+  };
+
+  const handleFinalPhone = () => {
+    trackContact('phone', 'home_final_cta', {
+      cta_name: 'কল করুন',
+      cta_location: 'home_final_cta',
+    });
+  };
+
   return (
     <div className="pt-20">
       <SEO 
@@ -79,14 +117,18 @@ export default function Home() {
 
             <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-4">
               <Link 
-                to="/projects" 
+                to="/projects"
+                onClick={handleViewProjectsClick}
                 className="px-8 py-5 border-2 border-white/10 hover:border-brand-gold text-white font-bold rounded-2xl transition-all text-base md:text-lg group flex items-center gap-2 hover:bg-white/5"
               >
                 আমাদের কাজ দেখুন
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
               <button 
-                onClick={() => window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}`, '_blank')}
+                onClick={() => {
+                  handleHeroWhatsApp();
+                  window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}`, '_blank');
+                }}
                 className="px-8 py-5 bg-[#25D366] hover:bg-[#128C7E] text-white font-bold rounded-2xl transition-all flex items-center gap-3 text-base md:text-lg shadow-xl shadow-green-500/10 hover:-translate-y-1"
               >
                 <MessageCircle size={24} />
@@ -174,7 +216,10 @@ export default function Home() {
               </h2>
               <div className="flex flex-wrap justify-center gap-6 pt-4">
                 <button 
-                  onClick={() => window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}`, '_blank')}
+                  onClick={() => {
+                    handleFinalWhatsApp();
+                    window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}`, '_blank');
+                  }}
                   className="px-10 py-5 bg-black text-white font-black rounded-2xl flex items-center gap-3 text-lg transition-transform hover:scale-105 active:scale-95 shadow-2xl"
                 >
                   <MessageCircle size={28} />
@@ -182,6 +227,7 @@ export default function Home() {
                 </button>
                 <a 
                   href={`tel:${siteConfig.phone}`}
+                  onClick={handleFinalPhone}
                   className="px-10 py-5 bg-white text-black font-black rounded-2xl flex items-center gap-3 text-lg transition-transform hover:scale-105 active:scale-95 shadow-2xl"
                 >
                   <Phone size={28} />

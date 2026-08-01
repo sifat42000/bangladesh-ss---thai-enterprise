@@ -8,6 +8,7 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { serviceCategories } from '../../data/services';
+import { trackServiceClick } from '../../lib/metaPixel';
 
 const ServiceCategoryList: React.FC = () => {
   return (
@@ -62,6 +63,7 @@ const ServiceCategoryList: React.FC = () => {
                   <div className="pt-4 border-t border-white/5">
                     <Link 
                       to={`/services/${service.slug}`} 
+                      onClick={() => trackServiceClick(service.bnTitle || service.title, service.slug, 'service_card')}
                       className="inline-flex items-center gap-2 font-bold text-xs uppercase tracking-widest text-brand-gold hover:text-white transition-colors"
                     >
                       কাজের ছবি দেখুন

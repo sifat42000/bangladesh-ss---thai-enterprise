@@ -8,6 +8,7 @@ import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { services } from '../../data/services';
+import { trackServiceClick } from '../../lib/metaPixel';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -57,6 +58,7 @@ const ServicesPreview: React.FC = () => {
                 </div>
                 <Link 
                   to={`/services/${service.slug}`}
+                  onClick={() => trackServiceClick(service.title, service.slug, 'home_services_preview')}
                   className="inline-flex items-center gap-2 text-brand-gold font-bold text-sm uppercase tracking-wider group/link"
                 >
                   বিস্তারিত দেখুন

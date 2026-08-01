@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { MapPin, ArrowRight } from 'lucide-react';
 import { images } from '../../assets/images';
 import OptimizedImage from '../common/OptimizedImage';
+import { trackContact, trackProjectClick, trackQuoteRequest } from '../../lib/metaPixel';
 
 interface Project {
   id: number;
@@ -81,7 +82,21 @@ const ProjectGrid: React.FC<ProjectGridProps> = ({ projects }) => {
 
                     <div className="pt-6 border-t border-white/5">
                       <Link 
-                        to="/contact" 
+                        to="/contact"
+                        onClick={() => {
+                          trackProjectClick(project.title, project.category, 'project_grid');
+                          trackContact('whatsapp', 'project_card', {
+                            project_name: project.title,
+                            project_category: project.category,
+                            cta_name: 'এ ধরনের কাজ চাই',
+                            cta_location: 'project_card',
+                          });
+                          trackQuoteRequest('project_card', {
+                            project_name: project.title,
+                            project_category: project.category,
+                            cta_name: 'এ ধরনের কাজ চাই',
+                          });
+                        }}
                         className="w-full py-4 bg-brand-navy border border-white/5 rounded-2xl flex items-center justify-center gap-3 text-white font-bold hover:bg-brand-gold hover:text-black transition-all group/btn"
                       >
                         এ ধরনের কাজ চাই

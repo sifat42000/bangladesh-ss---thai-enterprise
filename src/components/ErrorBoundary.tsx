@@ -2,17 +2,22 @@ import React from 'react';
 
 type State = { hasError: boolean; error?: Error };
 
-class ErrorBoundary extends React.Component<React.PropsWithChildren<{}>, State> {
-  constructor(props: React.PropsWithChildren<{}>) {
+type Props = { children?: React.ReactNode };
+
+class ErrorBoundary extends React.Component<Props, State> {
+  declare props: Props;
+  declare state: State;
+
+  constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, info: any) {
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
     // You could log to an external service here
     // console.error('ErrorBoundary caught', error, info);
   }
@@ -29,7 +34,7 @@ class ErrorBoundary extends React.Component<React.PropsWithChildren<{}>, State> 
       );
     }
 
-    return this.props.children as React.ReactElement;
+    return <>{this.props.children}</>;
   }
 }
 

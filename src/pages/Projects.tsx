@@ -15,6 +15,7 @@ import OptimizedImage from '../components/common/OptimizedImage';
 import ProjectGrid from '../components/projects/ProjectGrid';
 import BeforeAfterSection from '../components/projects/BeforeAfterSection';
 import ErrorBoundary from '../components/ErrorBoundary';
+import { trackContact, trackCustomEvent, trackProjectFilter, trackQuoteRequest } from '../lib/metaPixel';
 
 const filters = [
   { id: 'all', label: 'সব কাজ' },
@@ -28,6 +29,26 @@ const filters = [
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('all');
+
+  const handleFilterChange = (filterId: string) => {
+    if (filterId === activeFilter) {
+      return;
+    }
+
+    setActiveFilter(filterId);
+    trackProjectFilter(filterId, 'projects_page');
+  };
+
+  const handleProjectWhatsApp = () => {
+    trackContact('whatsapp', 'projects_final_cta', {
+      cta_name: 'WhatsApp-এ ছবি পাঠান',
+      cta_location: 'projects_final_cta',
+    });
+    trackQuoteRequest('projects_final_cta', {
+      cta_name: 'WhatsApp-এ ছবি পাঠান',
+      cta_location: 'projects_final_cta',
+    });
+  };
 
   const filteredProjects = activeFilter === 'all' 
     ? projects 
@@ -79,7 +100,7 @@ export default function Projects() {
             {filters.map((filter) => (
               <button
                 key={filter.id}
-                onClick={() => setActiveFilter(filter.id)}
+                onClick={() => handleFilterChange(filter.id)}
                 className={`relative px-6 py-3 rounded-2xl font-bold transition-all text-sm uppercase tracking-wider overflow-hidden group ${
                   activeFilter === filter.id 
                   ? 'text-black' 
@@ -125,7 +146,10 @@ export default function Projects() {
               
               <div className="flex flex-wrap justify-center gap-6 pt-10">
                 <button 
-                  onClick={() => window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}`, '_blank')}
+                  onClick={() => {
+                    handleProjectWhatsApp();
+                    window.open(`https://wa.me/${siteConfig.whatsapp.replace(/[^0-9]/g, '')}`, '_blank');
+                  }}
                   className="px-10 py-5 bg-[#25D366] text-white font-black rounded-2xl flex items-center gap-3 transition-all hover:scale-105 shadow-2xl text-lg group"
                 >
                   <MessageCircle size={28} />
